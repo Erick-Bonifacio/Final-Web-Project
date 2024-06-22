@@ -1,0 +1,28 @@
+[
+  {
+    "idUser": 129031,
+    "nome": "Erick Bonifacio",
+    "dataNascimento": "01/01/2000",
+    "endereco" : "rua porto amazonas",
+    "email": "teste@gmail.com",
+    "senha": "0000",
+    "assets": [
+      {
+        "idAsset": 129031,
+        "data": "01/01/2024",
+        "sigla": "PTR4",
+        "setor": "Petróleo",
+        "preco": 100,
+        "cotas": 2
+      },
+      {
+        "idAsset": "24046eb6b25d5e725d69207f83fcc76d",
+        "data": "01/01/2024",
+        "sigla": "PTR4",
+        "setor": "Petróleo",
+        "preco": 100,
+        "cotas": 2
+      }
+    ]
+  }
+]

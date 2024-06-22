@@ -130,23 +130,16 @@ app.post('/add-user', (req, res) => {
    
 });
 
-
-
 app.delete('/delete-user', (req, res) => {
     
     const {idUser} = req.body;
 
-    const deletedUser =  User.findByIdAndDelete(idUser);
-
-    // busca no banco 
-    for(user of users){
-        if (user.idUser == idUser){
-            
-        }
-    }
-
-    if(assets.length > 0){
-        res.status(200).json(assets[0]);
+    let user = users.find((u) => u.idUser === idUser);
+    
+    if(user){
+        users.pop(user);
+        fs.writeFileSync(pathUsers, JSON.stringify(users, null, 2));
+        res.status(200).json(user);
     }
     else {
         res.status(404).send('USER_NOT_FOUND');

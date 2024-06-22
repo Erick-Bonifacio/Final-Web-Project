@@ -58,24 +58,15 @@ app.get('/list-assets', (req, res) => {
 app.get('/get-asset', (req, res) => {
     
     const {idUser, siglaAsset} = req.body;
-    let returnAsset = ''
     
     console.log(idUser)
     console.log(siglaAsset)
 
-    // busca no banco e para na primeira ocorrencia ---------- Nota: considera-se que havera apenas uma ocorrencia do ativo no banco
-    for(user of users){
-        if (user.idUser == idUser){
-            for(asset of user.assets){
-                if(asset.sigla == siglaAsset){
-                    returnAsset = asset
-                    break 
-                }
-            }
-        }
-    }
+    // busca no banco
+    let user = users.find((u) => u.idUser === idUser);
+    let returnAsset = user ? user.assets.filter((a) => a.sigla === siglaAsset) : [];
 
-    if(returnAsset != ''){
+    if(returnAsset){
         res.status(200).json(returnAsset);
     }
     else {
@@ -144,12 +135,13 @@ app.post('/add-user', (req, res) => {
 app.delete('/delete-user', (req, res) => {
     
     const {idUser} = req.body;
-    let assets = []
+
+    const deletedUser =  User.findByIdAndDelete(idUser);
 
     // busca no banco 
     for(user of users){
         if (user.idUser == idUser){
-            assets.push(user.assets)
+            
         }
     }
 

@@ -145,3 +145,48 @@ app.delete('/delete-user', (req, res) => {
         res.status(404).send('USER_NOT_FOUND');
     }
 });
+
+app.put('/update-user', (req, res) => {
+    const { idUser, field, newInfo } = req.body;
+
+    // Verifica se todos os campos necessários foram enviados no body
+    if (!idUser || !field || !newInfo) {
+        return res.status(400).send('Existem campos em branco!');
+    }
+
+    // Encontra o índice do usuário no array users
+    const userIndex = users.findIndex((u) => u.idUser.toString() === idUser.toString());
+
+    if (userIndex === -1) {
+        return res.status(404).send('USER_NOT_FOUND');
+    }
+
+    switch (field) {
+        case 'nome':
+            users[userIndex].nome = newInfo;
+            break;
+        case 'dataNascimento':
+            users[userIndex].dataNascimento = newInfo;
+            break;
+        case 'endereco':
+            users[userIndex].endereco = newInfo;
+            break;
+        case 'email':
+            users[userIndex].email = newInfo;
+            break;
+        case 'senha':
+            users[userIndex].senha = newInfo;
+            break;
+        default:
+            return res.status(400).send('Campo de atualização inválido');
+    }
+
+    try {
+        fs.writeFileSync(pathUsers, JSON.stringify(users, null, 2));
+    } catch (error) {
+        console.error('Erro ao escrever no arquivo users.json:', error);
+        return res.status(500).send('Erro ao salvar os dados do usuário');
+    }
+
+    res.status(200).json(users[userIndex]);
+});

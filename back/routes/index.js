@@ -147,7 +147,7 @@ app.delete('/delete-user', (req, res) => {
 });
 
 app.put('/update-user', (req, res) => {
-    const { idUser, field, newInfo } = req.body;
+    const { idUser, nome, dataNascimento, email, senha } = req.body;
 
     // Verifica se todos os campos necessários foram enviados no body
     if (!idUser || !field || !newInfo) {
@@ -161,25 +161,36 @@ app.put('/update-user', (req, res) => {
         return res.status(404).send('USER_NOT_FOUND');
     }
 
-    switch (field) {
-        case 'nome':
-            users[userIndex].nome = newInfo;
-            break;
-        case 'dataNascimento':
-            users[userIndex].dataNascimento = newInfo;
-            break;
-        case 'endereco':
-            users[userIndex].endereco = newInfo;
-            break;
-        case 'email':
-            users[userIndex].email = newInfo;
-            break;
-        case 'senha':
-            users[userIndex].senha = newInfo;
-            break;
-        default:
-            return res.status(400).send('Campo de atualização inválido');
+    let updateUser = {
+        idUser : idUser,
+        nome : nome,
+        dataNascimento : dataNascimento,
+        email : email,
+        senha : senha,
+        assets : users[userIndex].assets
     }
+
+    users[userIndex] = updateUser;
+
+    // switch (field) {
+    //     case 'nome':
+    //         users[userIndex].nome = newInfo;
+    //         break;
+    //     case 'dataNascimento':
+    //         users[userIndex].dataNascimento = newInfo;
+    //         break;
+    //     case 'endereco':
+    //         users[userIndex].endereco = newInfo;
+    //         break;
+    //     case 'email':
+    //         users[userIndex].email = newInfo;
+    //         break;
+    //     case 'senha':
+    //         users[userIndex].senha = newInfo;
+    //         break;
+    //     default:
+    //         return res.status(400).send('Campo de atualização inválido');
+    // }
 
     try {
         fs.writeFileSync(pathUsers, JSON.stringify(users, null, 2));

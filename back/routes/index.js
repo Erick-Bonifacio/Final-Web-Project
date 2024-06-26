@@ -31,9 +31,11 @@ const generateHash = function ()
     return crypto.randomBytes(16).toString('hex');
 }
 
+
 app.get('/users', (req, res) => {
     res.status(200).json(users);
 });
+
 
 app.get('/list-assets', (req, res) => {
     
@@ -55,6 +57,7 @@ app.get('/list-assets', (req, res) => {
     }
 });
 
+
 app.get('/get-asset', (req, res) => {
     
     const {idUser, siglaAsset} = req.body;
@@ -73,6 +76,7 @@ app.get('/get-asset', (req, res) => {
         res.status(404).send('USER_NOT_FOUND');
     }
 });
+
 
 app.post('/add-asset', (req, res) => {
 
@@ -108,9 +112,47 @@ app.post('/add-asset', (req, res) => {
 });
 
 
+app.put('/update-asset', (req, res) => {
+
+    console.log('ENTROU OUAH!')
+
+    const {idUser, idAsset, data, sigla, setor, preco, cotas} = req.body;
+
+    let userFound = false;
+    let assetFound = false;
+
+    for(let user of users){
+        if(user.idUser == idUser){
+            userFound = true;
+            for(let asset of user.assets){
+                if(asset.idAsset == idAsset){
+                    if (data) asset.data = data;
+                    if (sigla) asset.sigla = sigla;
+                    if (setor) asset.setor = setor;
+                    if (preco) asset.preco = preco;
+                    if (cotas) asset.cotas = cotas;
+                    assetFound = true;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+
+    if(userFound && assetFound){
+        fs.writeFileSync(pathUsers, JSON.stringify(users, null, 2));
+        res.status(200).send('OK');
+    } else if (!userFound) {
+        res.status(404).send('USER_NOT_FOUND');
+    } else {
+        res.status(404).send('ASSET_NOT_FOUND');
+    }
+});
+
+
 app.post('/add-user', (req, res) => {
     
-    const {nome, dataNascimento, email, senha} = req.body;
+    const {nome, dataNascimento, rua, bairro, email, senha} = req.body;
     
     let idUser = generateHash();
     
@@ -118,6 +160,8 @@ app.post('/add-user', (req, res) => {
         idUser : idUser,
         nome : nome,
         dataNascimento : dataNascimento,
+        rua: rua,
+        bairro: bairro,
         email : email,
         senha : senha,
         assets : []
@@ -129,6 +173,7 @@ app.post('/add-user', (req, res) => {
     res.status(200).send(JSON.stringify({id : idUser, status : 'OK'}));
    
 });
+
 
 app.delete('/delete-user', (req, res) => {
     
@@ -146,8 +191,9 @@ app.delete('/delete-user', (req, res) => {
     }
 });
 
+
 app.put('/update-user', (req, res) => {
-    const { idUser, nome, dataNascimento, email, senha } = req.body;
+    const { idUser, nome, dataNascimento, rua, bairro, email, senha } = req.body;
 
     // Encontra o índice do usuário no array users
     const userIndex = users.findIndex((u) => u.idUser.toString() === idUser.toString());
@@ -160,32 +206,14 @@ app.put('/update-user', (req, res) => {
         idUser : idUser,
         nome : nome,
         dataNascimento : dataNascimento,
+        rua: rua,
+        bairro: bairro,
         email : email,
         senha : senha,
         assets : users[userIndex].assets
     }
 
     users[userIndex] = updateUser;
-
-    // switch (field) {
-    //     case 'nome':
-    //         users[userIndex].nome = newInfo;
-    //         break;
-    //     case 'dataNascimento':
-    //         users[userIndex].dataNascimento = newInfo;
-    //         break;
-    //     case 'endereco':
-    //         users[userIndex].endereco = newInfo;
-    //         break;
-    //     case 'email':
-    //         users[userIndex].email = newInfo;
-    //         break;
-    //     case 'senha':
-    //         users[userIndex].senha = newInfo;
-    //         break;
-    //     default:
-    //         return res.status(400).send('Campo de atualização inválido');
-    // }
 
     try {
         fs.writeFileSync(pathUsers, JSON.stringify(users, null, 2));

@@ -107,6 +107,43 @@ app.post('/add-asset', (req, res) => {
     
 });
 
+app.put('/update-asset', (req, res) => {
+
+    console.log('ENTROU OUAH!')
+
+    const {idUser, idAsset, data, sigla, setor, preco, cotas} = req.body;
+
+    let userFound = false;
+    let assetFound = false;
+
+    for(let user of users){
+        if(user.idUser == idUser){
+            userFound = true;
+            for(let asset of user.assets){
+                if(asset.idAsset == idAsset){
+                    if (data) asset.data = data;
+                    if (sigla) asset.sigla = sigla;
+                    if (setor) asset.setor = setor;
+                    if (preco) asset.preco = preco;
+                    if (cotas) asset.cotas = cotas;
+                    assetFound = true;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+
+    if(userFound && assetFound){
+        fs.writeFileSync(pathUsers, JSON.stringify(users, null, 2));
+        res.status(200).send('OK');
+    } else if (!userFound) {
+        res.status(404).send('USER_NOT_FOUND');
+    } else {
+        res.status(404).send('ASSET_NOT_FOUND');
+    }
+});
+
 
 app.post('/add-user', (req, res) => {
     
@@ -129,6 +166,7 @@ app.post('/add-user', (req, res) => {
     res.status(200).send(JSON.stringify({id : idUser, status : 'OK'}));
    
 });
+
 
 app.delete('/delete-user', (req, res) => {
     

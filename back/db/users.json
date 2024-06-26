@@ -3,6 +3,8 @@
     "idUser": 129031,
     "nome": "ERICK",
     "dataNascimento": "01/01/2000",
+    "rua": "Piranguinho Street",
+    "bairro": "Ferreira Quarter",
     "email": "teste@teste.com",
     "senha": "0000",
     "assets": [

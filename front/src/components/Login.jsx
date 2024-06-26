@@ -13,13 +13,8 @@ export default function Login() {
     console.log('Password:', password);
   };
 
-  let nav = 0;
   const navigate = (e) => {
-    nav = 1;
-  }
-
-  if(nav == 1){
-    return <Navigate to='/create-user'/>;
+    navigate('/create-user');
   }
 
   return (
@@ -50,7 +45,7 @@ export default function Login() {
         </div>
         <button type="submit">Login</button>
       </form>
-      <a href="" id='new-user' onClick={navigate}>Não possui cadastro?</a>
+      <a href="/create-user" id='new-user' onClick={navigate}>Não possui cadastro?</a>
     </div>
   );
 };

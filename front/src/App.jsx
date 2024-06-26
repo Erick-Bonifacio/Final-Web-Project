@@ -1,15 +1,11 @@
-import Login from './components/Login';
-import CreateUser from './components/CreateUser';
+import CreateUser from './components/CreateUser.jsx';
 
-function App() {
+export default function App() {
   
   return(
     <>
       <CreateUser />
     </>
-    
   );
   
 }
-
-export default App

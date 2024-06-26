@@ -1,90 +1,160 @@
 import React, { useState } from 'react';
-import '../styles/LoginStyle.css';
-import { Navigate } from 'react-router-dom';
+import '../styles/CreateUserStyle.css'; // Adapte o caminho conforme necessário
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateUser() {
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [passwordOne, setPasswordOne] = useState('');
+  const [passwordTwo, setPasswordTwo] = useState('');
+  const [email, setEmail] = useState('');
+  const [birthdate, setBirthdate] = useState('');
+  const [cep, setCep] = useState('');
+  const [street, setStreet] = useState('');
+  const [quarter, setQuarter] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Adicione a lógica de autenticação aqui
+    // Adicione a lógica de criação de usuário aqui
     console.log('Username:', username);
-    console.log('Password:', password);
+    console.log('Password One:', passwordOne);
+    console.log('Password Two:', passwordTwo);
+    console.log('Email:', email);
+    console.log('Birthdate:', birthdate);
+    console.log('CEP:', cep);
+    console.log('Street:', street);
+    console.log('Bairro:', quarter);
+
+    alert("Conta criada com sucesso!")
+    navigate('/');
   };
 
-  let nav = 0;
-  const navigate = (e) => {
-    nav = 1;
-  }
 
-  if(nav == 1){
-    return <Navigate to='/create-user'/>;
-  }
+  const fetchAddress = async (cep) => {
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const data = await response.json();
+      if (!data.erro) {
+        setStreet(data.logradouro);
+        setQuarter(data.bairro);
+      } else {
+        setStreet('');
+        setQuarter('');
+      }
+    } catch (error) {
+      console.error('Error fetching address:', error);
+      setStreet('');
+      setQuarter('');
+    }
+  };
+
+  const handleCepChange = (e) => {
+    const cep = e.target.value;
+    setCep(cep);
+    if (cep.length === 8) {
+      fetchAddress(cep);
+    } else {
+      setStreet('');
+      setQuarter('');
+    }
+  };
 
   return (
-    <div className="signup-container">
-      <h2>Preencha os dados para se cadastrar</h2>
+    <div className="create-user-container">
+      <h2>Insira os dados para se cadastrar</h2>
       <form onSubmit={handleSubmit}>
         <div className="input-group">
-          <label htmlFor="name">Nome</label>
+          <label htmlFor="username">Nome</label>
           <input
             type="text"
-            id="name"
-            placeholder='fulano de tal'
+            id="username"
             value={username}
+            placeholder='fulano de tal'
             onChange={(e) => setUsername(e.target.value)}
             required
           />
         </div>
         <div className="input-group">
-          <label htmlFor="password">Data de Nascimento</label>
+          <label htmlFor="email">Email</label>
           <input
-            type="password"
-            id="password"
-            placeholder='senha'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type="email"
+            id="email"
+            value={email}
+            placeholder='exemplo@exemplo'
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
         <div className="input-group">
-          <label htmlFor="password">Senha</label>
+          <label htmlFor="birthdate">Data de Nascimento</label>
           <input
-            type="password"
-            id="password"
-            placeholder='senha'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type="date"
+            id="birthdate"
+            value={birthdate}
+            placeholder='01/01/2000'
+            onChange={(e) => setBirthdate(e.target.value)}
             required
           />
         </div>
         <div className="input-group">
-          <label htmlFor="password">Senha</label>
+          <label htmlFor="cep">CEP</label>
           <input
-            type="password"
-            id="password"
-            placeholder='senha'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type="text"
+            id="cep"
+            value={cep}
+            placeholder='00.000-000'
+            onChange={handleCepChange}
             required
           />
         </div>
         <div className="input-group">
-          <label htmlFor="password">Senha</label>
+          <label htmlFor="street">Rua</label>
           <input
-            type="password"
-            id="password"
-            placeholder='senha'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type="text"
+            id="street"
+            value={street}
+            placeholder='rua dos bobos'
+            onChange={(e) => setStreet(e.target.value)}
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <div className="input-group">
+          <label htmlFor="quarter">Bairro</label>
+          <input
+            type="text"
+            id="quarter"
+            value={quarter}
+            placeholder='bairro'
+            onChange={(e) => setQuarter(e.target.value)}
+            required
+          />
+        </div>
+        <div className="input-group">
+          <label htmlFor="password-one">Senha</label>
+          <input
+            type="password"
+            id="password-one"
+            value={passwordOne}
+            placeholder='senha'
+            onChange={(e) => setPasswordOne(e.target.value)}
+            required
+          />
+        </div>
+        <div className="input-group">
+          <label htmlFor="password-two">Confirmar Senha</label>
+          <input
+            type="password"
+            id="password-two"
+            value={passwordTwo}
+            placeholder='confirme a senha'
+            onChange={(e) => setPasswordTwo(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Create User</button>
       </form>
-      <a href="" id='new-user' onClick={navigate}>Não possui cadastro?</a>
+      <a href="/" id="login" >Fazer Login</a>
     </div>
   );
-};
-
+}

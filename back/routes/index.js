@@ -149,11 +149,6 @@ app.delete('/delete-user', (req, res) => {
 app.put('/update-user', (req, res) => {
     const { idUser, nome, dataNascimento, email, senha } = req.body;
 
-    // Verifica se todos os campos necessários foram enviados no body
-    if (!idUser || !field || !newInfo) {
-        return res.status(400).send('Existem campos em branco!');
-    }
-
     // Encontra o índice do usuário no array users
     const userIndex = users.findIndex((u) => u.idUser.toString() === idUser.toString());
 

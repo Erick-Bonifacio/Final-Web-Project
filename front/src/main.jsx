@@ -5,6 +5,7 @@ import './index.css'
 
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Login from './components/Login'
+import CreateUser from './components/CreateUser'
 
 const routes = createBrowserRouter([
   {

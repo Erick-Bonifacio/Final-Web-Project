@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import '../styles/CreateUserStyle.css'; // Adapte o caminho conforme necessário
+import React, { useState, useEffect } from 'react';
+import '../styles/CreateUserStyle.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function CreateUser() {
   const [username, setUsername] = useState('');
@@ -14,22 +15,45 @@ export default function CreateUser() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Adicione a lógica de criação de usuário aqui
-    console.log('Username:', username);
-    console.log('Password One:', passwordOne);
-    console.log('Password Two:', passwordTwo);
-    console.log('Email:', email);
-    console.log('Birthdate:', birthdate);
-    console.log('CEP:', cep);
-    console.log('Street:', street);
-    console.log('Bairro:', quarter);
+  useEffect(() => {
+    setNewUser({
+      nome: username,
+      dataNascimento: birthdate,
+      rua: street,
+      bairro: quarter,
+      email: email,
+      senha: passwordOne,
+    });
+  }, [username, birthdate, street, quarter, email, passwordOne]);
 
-    alert("Conta criada com sucesso!")
+  const [newUser, setNewUser] = useState({
+    nome: username,
+    dataNascimento: birthdate,
+    rua: street,
+    bairro: quarter,
+    email: email,
+    senha: passwordOne,
+  });
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (passwordOne !== passwordTwo) {
+      alert("Senhas não conferem!");
+      return;
+    }
+
+    try {
+      const resposta = await axios.post('http://localhost:8080/add-user', newUser);
+      if (resposta.status === 200)
+        setMsg('OK');
+    } catch (error) {
+      console.log(error);
+    }
+
+    alert("Conta criada com sucesso!");
     navigate('/');
   };
-
 
   const fetchAddress = async (cep) => {
     try {
@@ -154,7 +178,7 @@ export default function CreateUser() {
         </div>
         <button type="submit">Create User</button>
       </form>
-      <a href="/" id="login" >Fazer Login</a>
+      <a href="/" id="login">Fazer Login</a>
     </div>
   );
 }

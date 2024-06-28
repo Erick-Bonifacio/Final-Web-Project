@@ -25,5 +25,25 @@
         "cotas": 2
       }
     ]
+  },
+  {
+    "idUser": "4a42eacc6c1c2f8cd396f514b8f1075d",
+    "nome": "agust]=p--p",
+    "dataNascimento": "2024-05-30",
+    "rua": "Avenida Manoel Pedro Pimentel",
+    "bairro": "Continental",
+    "email": "hygygygy@gygygyg",
+    "senha": "123",
+    "assets": []
+  },
+  {
+    "idUser": "763c9773b8dab61698ab4b81536911b2",
+    "nome": "",
+    "dataNascimento": "",
+    "rua": "",
+    "bairro": "",
+    "email": "",
+    "senha": "",
+    "assets": []
   }
 ]

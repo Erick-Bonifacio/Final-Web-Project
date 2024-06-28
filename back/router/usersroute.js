@@ -1,29 +1,16 @@
 //requiring basic tools
 const express = require('express'); 
-const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const router = express.Router();
 
 //requiring extra tools
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
-// databank paths
+// databank path and connection
 const pathUsers = path.join(__dirname,'..','db','users.json');
-const pathAssets = path.join(__dirname,'..','db','assets.json');
-
 const users = JSON.parse(fs.readFileSync(pathUsers, {encoding: 'utf-8'}));
-// const assets = JSON.parse(fs.readFileSync(pathAssets, {encoding: 'utf-8'}));
-
-// initializing server
-const app = express();
-app.use(cors());
-
-//Função para extrair os dados do pacote IP
-app.use(express.json())
-
-app.listen(8080, ()=>{
-    console.log('Servidor On');
-});
 
 
 const generateHash = function () 
@@ -32,12 +19,12 @@ const generateHash = function ()
 }
 
 
-app.get('/users', (req, res) => {
+router.get('/users', autenticarToken, (req, res) => {
     res.status(200).json(users);
 });
 
 
-app.get('/list-assets', (req, res) => {
+router.get('/list-assets', autenticarToken, (req, res) => {
     
     const {idUser} = req.body;
     let assets = []
@@ -58,7 +45,7 @@ app.get('/list-assets', (req, res) => {
 });
 
 
-app.get('/get-asset', (req, res) => {
+router.get('/get-asset', autenticarToken, (req, res) => {
     
     const {idUser, siglaAsset} = req.body;
     
@@ -78,7 +65,7 @@ app.get('/get-asset', (req, res) => {
 });
 
 
-app.post('/add-asset', (req, res) => {
+router.post('/add-asset', autenticarToken, (req, res) => {
 
     const {idUser, data, sigla, setor, preco, cotas} = req.body;
 
@@ -112,7 +99,7 @@ app.post('/add-asset', (req, res) => {
 });
 
 
-app.put('/update-asset', (req, res) => {
+router.put('/update-asset', autenticarToken, (req, res) => {
 
     console.log('ENTROU OUAH!')
 
@@ -150,7 +137,7 @@ app.put('/update-asset', (req, res) => {
 });
 
 
-app.post('/add-user', (req, res) => {
+router.post('/add-user', autenticarToken, (req, res) => {
     
     const {nome, dataNascimento, rua, bairro, email, senha} = req.body;
     
@@ -175,7 +162,7 @@ app.post('/add-user', (req, res) => {
 });
 
 
-app.delete('/delete-user', (req, res) => {
+router.delete('/delete-user', autenticarToken, (req, res) => {
     
     const {idUser} = req.body;
 
@@ -192,7 +179,7 @@ app.delete('/delete-user', (req, res) => {
 });
 
 
-app.put('/update-user', (req, res) => {
+router.put('/update-user', autenticarToken, (req, res) => {
     const { idUser, nome, dataNascimento, rua, bairro, email, senha } = req.body;
 
     // Encontra o índice do usuário no array users
@@ -224,3 +211,19 @@ app.put('/update-user', (req, res) => {
 
     res.status(200).json(users[userIndex]);
 });
+
+function autenticarToken(req,res,next){
+    const authH = req.headers['authorization'];
+    const token = authH && authH.split(' ')[1];
+    if(token === null) return res.status(401).send('Token não encontrado');
+    
+    try {
+        const user = jwt.verify(token, process.env.TOKEN);
+        req.user = user;
+        next();
+    } catch (error) {
+        res.status(403).send('Token inválido');
+    }
+}
+
+module.exports = router;

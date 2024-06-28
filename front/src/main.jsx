@@ -4,8 +4,9 @@ import App from './App.jsx'
 import './index.css'
 
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import Login from './components/Login'
-import CreateUser from './components/CreateUser'
+import Login from './components/Login.jsx'
+import CreateUser from './components/CreateUser.jsx'
+import ListAssets from './components/ListAssets.jsx'
 
 const routes = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const routes = createBrowserRouter([
   {
     path: '/create-user',
     element : <CreateUser />
+  },
+  {
+    path: '/list-assets',
+    element: <ListAssets /> 
   }
 ]);
 

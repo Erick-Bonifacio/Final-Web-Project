@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/LoginStyle.css';
 import { Navigate } from 'react-router-dom';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -13,8 +16,19 @@ export default function Login() {
     console.log('Password:', password);
   };
 
-  const navigate = (e) => {
+  const navigateNewUser = (e) => {
     navigate('/create-user');
+  }
+
+  const autenticate = (e) => {
+    //autenticar e se sucesso ele login
+    const users = axios.get("http://localhost:8080/users");
+    
+
+  }
+
+  const login = (e) => {
+    navigate('/list-assets')
   }
 
   return (
@@ -43,9 +57,9 @@ export default function Login() {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" onClick={autenticate}>Login</button>
       </form>
-      <a href="/create-user" id='new-user' onClick={navigate}>Não possui cadastro?</a>
+      <a href="/create-user" id='new-user' onClick={navigateNewUser}>Não possui cadastro?</a>
     </div>
   );
 };

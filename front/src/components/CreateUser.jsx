@@ -2,12 +2,18 @@ import React, { useState, useEffect } from 'react';
 import '../styles/CreateUserStyle.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup"; 
+
+const schema = yup.object({
+  username: yup.string().required('Usuário obrigatório'),
+  email: yup.string().email('Email inválido').required('Email obrigatório'),
+  password: yup.string().min(2,'Senha com no mínimo 2 caracteres').required('Senha obrigatória'),
+  passwordConf: yup.string().oneOf([yup.ref('password')], 'As senhas devem coincidir!').required('Confirme a senha'),
+}).required();
 
 export default function CreateUser() {
-  const [username, setUsername] = useState('');
-  const [passwordOne, setPasswordOne] = useState('');
-  const [passwordTwo, setPasswordTwo] = useState('');
-  const [email, setEmail] = useState('');
   const [birthdate, setBirthdate] = useState('');
   const [cep, setCep] = useState('');
   const [street, setStreet] = useState('');
@@ -15,44 +21,32 @@ export default function CreateUser() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setNewUser({
-      nome: username,
-      dataNascimento: birthdate,
-      rua: street,
-      bairro: quarter,
-      email: email,
-      senha: passwordOne,
-    });
-  }, [username, birthdate, street, quarter, email, passwordOne]);
-
-  const [newUser, setNewUser] = useState({
-    nome: username,
-    dataNascimento: birthdate,
-    rua: street,
-    bairro: quarter,
-    email: email,
-    senha: passwordOne,
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm({
+    resolver: yupResolver(schema)
   });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    // Sync form data with state for birthdate, street, and quarter only when required.
+  }, [birthdate, street, quarter]);
 
-    if (passwordOne !== passwordTwo) {
-      alert("Senhas não conferem!");
-      return;
-    }
-
+  const onSubmit = async (data) => {
     try {
-      const resposta = await axios.post('http://localhost:8080/add-user', newUser);
-      if (resposta.status === 200)
-        setMsg('OK');
-    } catch (error) {
-      console.log(error);
-    }
+      const newUser = {
+        nome: data.username,
+        dataNascimento: birthdate,
+        rua: street,
+        bairro: quarter,
+        email: data.email,
+        senha: data.password,
+      };
 
-    alert("Conta criada com sucesso!");
-    navigate('/');
+      await axios.post('http://localhost:8080/usersroute/add-user', newUser);
+
+      alert("Conta criada com sucesso!");
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const fetchAddress = async (cep) => {
@@ -74,10 +68,10 @@ export default function CreateUser() {
   };
 
   const handleCepChange = (e) => {
-    const cep = e.target.value;
-    setCep(cep);
-    if (cep.length === 8) {
-      fetchAddress(cep);
+    const cepValue = e.target.value;
+    setCep(cepValue);
+    if (cepValue.length === 8) {
+      fetchAddress(cepValue);
     } else {
       setStreet('');
       setQuarter('');
@@ -87,28 +81,26 @@ export default function CreateUser() {
   return (
     <div className="create-user-container">
       <h2>Insira os dados para se cadastrar</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="input-group">
           <label htmlFor="username">Nome</label>
           <input
             type="text"
             id="username"
-            value={username}
             placeholder='fulano de tal'
-            onChange={(e) => setUsername(e.target.value)}
-            required
+            {...register('username')}
           />
+          <p className='erro'>{errors.username?.message}</p>
         </div>
         <div className="input-group">
           <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
-            value={email}
             placeholder='exemplo@exemplo'
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            {...register('email')}
           />
+          <p className='erro'>{errors.email?.message}</p>
         </div>
         <div className="input-group">
           <label htmlFor="birthdate">Data de Nascimento</label>
@@ -139,7 +131,6 @@ export default function CreateUser() {
             id="street"
             value={street}
             placeholder='rua dos bobos'
-            onChange={(e) => setStreet(e.target.value)}
             required
           />
         </div>
@@ -150,7 +141,6 @@ export default function CreateUser() {
             id="quarter"
             value={quarter}
             placeholder='bairro'
-            onChange={(e) => setQuarter(e.target.value)}
             required
           />
         </div>
@@ -159,22 +149,20 @@ export default function CreateUser() {
           <input
             type="password"
             id="password-one"
-            value={passwordOne}
             placeholder='senha'
-            onChange={(e) => setPasswordOne(e.target.value)}
-            required
+            {...register('password')}
           />
+          <p className='erro'>{errors.password?.message}</p>
         </div>
         <div className="input-group">
           <label htmlFor="password-two">Confirmar Senha</label>
           <input
             type="password"
             id="password-two"
-            value={passwordTwo}
             placeholder='confirme a senha'
-            onChange={(e) => setPasswordTwo(e.target.value)}
-            required
+            {...register('passwordConf')}
           />
+          <p className='erro'>{errors.passwordConf?.message}</p>
         </div>
         <button type="submit">Create User</button>
       </form>

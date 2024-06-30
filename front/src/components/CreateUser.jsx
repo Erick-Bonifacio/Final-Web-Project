@@ -26,7 +26,6 @@ export default function CreateUser() {
   });
 
   useEffect(() => {
-    // Sync form data with state for birthdate, street, and quarter only when required.
   }, [birthdate, street, quarter]);
 
   const onSubmit = async (data) => {

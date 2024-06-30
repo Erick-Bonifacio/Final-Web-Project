@@ -60,3 +60,8 @@
     background-color: #0056b3;
   }
   
+  .erro {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 5px;
+  }

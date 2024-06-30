@@ -140,6 +140,12 @@ router.put('/update-asset', autenticarToken, (req, res) => {
 router.post('/add-user', autenticarToken, (req, res) => {
     
     const {nome, dataNascimento, rua, bairro, email, senha} = req.body;
+
+    for (let user of users){
+        if(user.email === email){
+            return res.status(409).send(`Usuario com email ${email} já existe.`);
+        }   
+    }
     
     let idUser = generateHash();
     

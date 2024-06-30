@@ -7,6 +7,7 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Login from './components/Login.jsx'
 import CreateUser from './components/CreateUser.jsx'
 import ListAssets from './components/ListAssets.jsx'
+import DeleteUser from './components/DeleteUser.jsx'
 
 const routes = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const routes = createBrowserRouter([
   {
     path: '/list-assets',
     element: <ListAssets /> 
+  },
+  {
+    path: '/delete-user',
+    element: <DeleteUser />
   }
 ]);
 

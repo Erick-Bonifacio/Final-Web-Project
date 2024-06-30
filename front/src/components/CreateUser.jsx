@@ -39,10 +39,16 @@ export default function CreateUser() {
         senha: data.password,
       };
 
-      await axios.post('http://localhost:8080/usersroute/add-user', newUser);
-
-      alert("Conta criada com sucesso!");
-      navigate('/');
+      let res = await axios.post('http://localhost:8080/usersroute/add-user', newUser);
+      if(res.status == 200){
+          alert("Conta criada com sucesso!");
+          navigate('/');
+      } else {
+          alert("Usuario ja existe");
+          navigate('/');
+      }
+    
+      
     } catch (error) {
       console.error(error);
     }

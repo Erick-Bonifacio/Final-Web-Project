@@ -137,7 +137,7 @@ router.put('/update-asset', autenticarToken, (req, res) => {
 });
 
 
-router.post('/add-user', autenticarToken, (req, res) => {
+router.post('/add-user', (req, res) => {
     
     const {nome, dataNascimento, rua, bairro, email, senha} = req.body;
 

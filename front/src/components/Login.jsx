@@ -1,37 +1,53 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../styles/LoginStyle.css';
-import axios from 'axios';
-import { useForm } from 'react-hook-form';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/LoginStyle.css";
+import axios from "axios";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup"; 
+import * as yup from "yup";
 
-const schema = yup.object({
-  username: yup.string().required('Usuário obrigatório'),
-  password: yup.string().required('Senha obrigatória'),
-}).required();
+const schema = yup
+  .object({
+    username: yup.string().required("Usuário obrigatório"),
+    password: yup.string().required("Senha obrigatória"),
+  })
+  .required();
 
 export default function Login() {
   const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schema)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
   });
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post('http://localhost:8080/auth/login', data);
-      console.log(response.data);
-      navigate('/list-assets');
+      const response = await axios.post(
+        "http://localhost:8080/auth/login",
+        data
+      );
+      navigate("/list-assets");
+
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data.accessToken);
+      } else if (response.status === 401) {
+        alert(response.data);
+      } else {
+        alert("Erro de login:", response.data);
+      }
     } catch (error) {
-      console.error('Erro de login:', error);
+      alert(`Erro de login: ${error.response.data}`);
       // Lidar com erros de autenticação aqui
     }
   };
 
   const navigateNewUser = () => {
-    navigate('/create-user');
-  }
+    navigate("/create-user");
+  };
 
   return (
     <div className="login-container">
@@ -42,24 +58,26 @@ export default function Login() {
           <input
             type="text"
             id="username"
-            placeholder='exemplo@exemplo.com'
-            {...register('username')}
+            placeholder="exemplo@exemplo.com"
+            {...register("username")}
           />
-          <p className='erro'>{errors.username?.message}</p>
+          <p className="erro">{errors.username?.message}</p>
         </div>
         <div className="input-group">
           <label htmlFor="password">Senha</label>
           <input
             type="password"
             id="password"
-            placeholder='senha'
-            {...register('password')}
+            placeholder="senha"
+            {...register("password")}
           />
-          <p className='erro'>{errors.password?.message}</p>
+          <p className="erro">{errors.password?.message}</p>
         </div>
         <button type="submit">Login</button>
       </form>
-      <a href="/create-user" id='new-user' onClick={navigateNewUser}>Não possui cadastro?</a>
+      <a href="/create-user" id="new-user" onClick={navigateNewUser}>
+        Não possui cadastro?
+      </a>
     </div>
   );
-};
+}

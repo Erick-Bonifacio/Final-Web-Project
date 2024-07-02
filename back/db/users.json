@@ -45,5 +45,15 @@
     "email": "",
     "senha": "",
     "assets": []
+  },
+  {
+    "idUser": "6a6fc81818d5625446e9d38ef7efa1b1",
+    "nome": "Adriano",
+    "dataNascimento": "2001-07-17",
+    "rua": "Rua Doutor Domiciano Costa Moreira",
+    "bairro": "Pinheirinho",
+    "email": "a@gmail.com",
+    "senha": "a123",
+    "assets": []
   }
 ]

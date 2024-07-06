@@ -23,6 +23,11 @@ router.get('/users', autenticarToken, (req, res) => {
     res.status(200).json(users);
 });
 
+router.get('/get-user/:id', autenticarToken, (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+    console.log(req);
+});
 
 router.get('/list-assets', autenticarToken, (req, res) => {
     
@@ -109,10 +114,10 @@ router.put('/update-asset', autenticarToken, (req, res) => {
     let assetFound = false;
 
     for(let user of users){
-        if(user.idUser == idUser){
+        if(user.idUser === idUser){
             userFound = true;
             for(let asset of user.assets){
-                if(asset.idAsset == idAsset){
+                if(asset.idAsset === idAsset){
                     if (data) asset.data = data;
                     if (sigla) asset.sigla = sigla;
                     if (setor) asset.setor = setor;
@@ -128,13 +133,14 @@ router.put('/update-asset', autenticarToken, (req, res) => {
 
     if(userFound && assetFound){
         fs.writeFileSync(pathUsers, JSON.stringify(users, null, 2));
-        res.status(200).send('OK');
+        res.status(200).send({ status: 'OK' });
     } else if (!userFound) {
-        res.status(404).send('USER_NOT_FOUND');
+        res.status(404).send({ error: 'USER_NOT_FOUND' });
     } else {
-        res.status(404).send('ASSET_NOT_FOUND');
+        res.status(404).send({ error: 'ASSET_NOT_FOUND' });
     }
 });
+
 
 
 router.post('/add-user', (req, res) => {
@@ -195,7 +201,7 @@ router.put('/update-user', autenticarToken, (req, res) => {
         return res.status(404).send('USER_NOT_FOUND');
     }
 
-    let updateUser = {
+    let updatedUser = {
         idUser : idUser,
         nome : nome,
         dataNascimento : dataNascimento,
@@ -206,7 +212,7 @@ router.put('/update-user', autenticarToken, (req, res) => {
         assets : users[userIndex].assets
     }
 
-    users[userIndex] = updateUser;
+    users[userIndex] = updatedUser;
 
     try {
         fs.writeFileSync(pathUsers, JSON.stringify(users, null, 2));
@@ -220,6 +226,9 @@ router.put('/update-user', autenticarToken, (req, res) => {
 
 function autenticarToken(req,res,next){
     const authH = req.headers['authorization'];
+
+    console.log(' token teste', authH)
+
     const token = authH && authH.split(' ')[1];
     if(token === null) return res.status(401).send('Token não encontrado');
     

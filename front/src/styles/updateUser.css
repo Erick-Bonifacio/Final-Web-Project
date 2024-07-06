@@ -1,0 +1,82 @@
+/* UpdateAsset.css */
+
+/* Container do formulário */
+.update-asset-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Título */
+  .update-asset-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* Estilização dos grupos de input */
+  .input-group {
+    margin-bottom: 15px;
+  }
+  
+  /* Estilização das labels */
+  .input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Estilização dos inputs */
+  .input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* Estilização das mensagens de erro */
+  .erro {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  /* Botão de envio */
+  button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  /* Hover no botão de envio */
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Link para voltar para a home */
+  #home {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  /* Hover no link */
+  #home:hover {
+    color: #0056b3;
+  }
+  

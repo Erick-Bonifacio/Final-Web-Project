@@ -30,7 +30,7 @@ export default function Login() {
         "http://localhost:8080/auth/login",
         data
       );
-      navigate("/list-assets");
+      navigate("/home");
 
       if (response.status === 200) {
         localStorage.setItem("token", response.data.accessToken);

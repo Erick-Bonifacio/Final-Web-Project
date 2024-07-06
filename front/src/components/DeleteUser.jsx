@@ -85,7 +85,7 @@ export default function DeleteUser() {
             </div>
             <button type="submit">Deletar</button>
         </form>
-        <a href="/list-assets" id='new-user' onClick={navigateListAssets}>Voltar</a>
+        <a href="/home"  id='new-user' onClick={navigateListAssets}>Voltar</a>
         </div>
     );
 };

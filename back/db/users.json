@@ -55,5 +55,25 @@
     "email": "a@gmail.com",
     "senha": "a123",
     "assets": []
+  },
+  {
+    "idUser": "a8c8de713e02154b38fcee3108235b5f",
+    "nome": "Erick",
+    "dataNascimento": "2024-03-28",
+    "rua": "Rua Moisés Luize",
+    "bairro": "Cruzeiro",
+    "email": "erick@gmail.com",
+    "senha": "erick1",
+    "assets": []
+  },
+  {
+    "idUser": "fdaac82d735cff02e196a2a290e9b630",
+    "nome": "plays muniz",
+    "dataNascimento": "2000-10-18",
+    "rua": "Rua Nelson Horácio Conceição",
+    "bairro": "Jardim Las Palmas",
+    "email": "jogadasplays@gmail.com",
+    "senha": "larissa",
+    "assets": []
   }
 ]

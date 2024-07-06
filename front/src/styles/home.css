@@ -1,0 +1,29 @@
+body{
+    display: flex;
+    justify-content: left;
+}
+
+#nav-bar{
+    margin-top: 0;
+    height: 50%;
+    width: 15%;
+}
+
+#content{
+    height: 100%;
+    width: 85%;
+    background-color: white;
+}
+
+#footer{
+    display: flex;
+    width: 50%;
+    padding: 0;
+    margin: 0 auto;
+}
+
+#git{
+    height: 50%;
+    margin: auto;
+}
+

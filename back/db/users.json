@@ -54,20 +54,12 @@
         "cotas": 30
       },
       {
-        "idAsset": "108abaa7648c9fc0aee92d06fe29ff39",
-        "data": "02/02/2024",
-        "sigla": "APPL3",
-        "setor": "petrolifero também",
-        "preco": 123,
-        "cotas": 2323
-      },
-      {
-        "idAsset": "1a8066f5186d5d70f112de337ed14d28",
-        "data": "09/04/2003",
-        "sigla": "NVDA",
-        "setor": "mudei setor",
-        "preco": 456,
-        "cotas": 456
+        "idAsset": "b5535ace57a9af3b3e6f778bc5567aa2",
+        "data": "2024-07-01",
+        "sigla": "VALE3",
+        "setor": "Extração Mineral",
+        "preco": 200,
+        "cotas": 250
       }
     ]
   },

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import ListAssets from './ListAssets';
 import '../styles/home.css';
 
@@ -8,9 +7,11 @@ export default function Home() {
         <>
             <div id='nav-bar'>
                 <nav>
+                    <span className="brand-name">Wallet</span>
                     <ul>
                         <li><a href='/add-asset'>Adicionar asset</a></li>
                         <li><a href='/update-asset'>Atualizar asset</a></li>
+                        <li><a href='/delete-asset'>Deletar asset</a></li>
                         <li><a href='/update-user'>Atualizar usuário</a></li>
                         <li><a href='/delete-user'>Excluir conta</a></li>
                     </ul>

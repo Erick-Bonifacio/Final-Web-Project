@@ -7,6 +7,7 @@ import Home from './components/Home.jsx'
 import UpdateUser from './components/UpdateUser.jsx'
 import UpdateAsset from './components/UpdateAsset.jsx'
 import AddAsset from './components/AddAsset.jsx'
+import DeleteAsset from './components/DeleteAsset.jsx'
 
 export default function App() {
 
@@ -42,6 +43,10 @@ const routes = createBrowserRouter([
   {
     path: '/add-asset',
     element: <AddAsset />
+  },
+  {
+    path: '/delete-asset',
+    element: <DeleteAsset />
   }
 
 

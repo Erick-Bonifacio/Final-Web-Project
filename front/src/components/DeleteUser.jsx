@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/LoginStyle.css';
+import '../styles/updateUser.css'; // Importando o mesmo arquivo CSS do UpdateUser
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -65,8 +65,8 @@ export default function DeleteUser() {
     }
 
     return (
-        <div className="login-container">
-            <h2>Deletar Usuario</h2>
+        <div className="update-asset-container">
+            <h2>Deletar Usuário</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="input-group">
                     <label htmlFor="username">Usuário</label>
@@ -100,7 +100,7 @@ export default function DeleteUser() {
                 </div>
                 <button type="submit">Deletar</button>
             </form>
-            <a href="/home" id='new-user' onClick={navigateListAssets}>Voltar</a>
+            <a href="/home" id="home">Voltar para Home</a>
         </div>
     );
 };

@@ -52,7 +52,7 @@ export default function ListAssets() {
 
     return (
         <div className="assets-list">
-            <h1>Seus Assets</h1>
+            {/* <h1>Seus Assets</h1> */}
             {assets.length > 0 ? (
                 <ul>
                     {assets.map((asset, index) => (

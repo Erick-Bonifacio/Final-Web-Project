@@ -138,6 +138,35 @@ router.put('/update-asset', autenticarToken, (req, res) => {
 });
 
 
+router.delete('/delete-asset', autenticarToken, (req, res) => {
+    const { idUser, sigla } = req.body;
+
+    let userFound = false;
+    let assetFound = false;
+
+    for (let user of users) {
+        if (user.idUser === idUser) {
+            userFound = true;
+            const initialAssetCount = user.assets.length;
+            user.assets = user.assets.filter(asset => asset.sigla !== sigla);
+            if (user.assets.length < initialAssetCount) {
+                assetFound = true;
+            }
+            break;
+        }
+    }
+
+    if (userFound && assetFound) {
+        fs.writeFileSync(pathUsers, JSON.stringify(users, null, 2));
+        res.status(200).send({ status: 'OK' });
+    } else if (!userFound) {
+        res.status(404).send({ error: 'USER_NOT_FOUND' });
+    } else {
+        res.status(404).send({ error: 'ASSET_NOT_FOUND' });
+    }
+});
+
+
 
 
 router.post('/add-user', (req, res) => {

@@ -105,10 +105,7 @@ router.post('/add-asset', autenticarToken, (req, res) => {
 
 
 router.put('/update-asset', autenticarToken, (req, res) => {
-
-    console.log('ENTROU OUAH!')
-
-    const {idUser, idAsset, data, sigla, setor, preco, cotas} = req.body;
+    const { idUser, sigla, data, setor, preco, cotas } = req.body;
 
     let userFound = false;
     let assetFound = false;
@@ -117,9 +114,8 @@ router.put('/update-asset', autenticarToken, (req, res) => {
         if(user.idUser === idUser){
             userFound = true;
             for(let asset of user.assets){
-                if(asset.idAsset === idAsset){
+                if(asset.sigla === sigla){
                     if (data) asset.data = data;
-                    if (sigla) asset.sigla = sigla;
                     if (setor) asset.setor = setor;
                     if (preco) asset.preco = preco;
                     if (cotas) asset.cotas = cotas;
@@ -140,6 +136,7 @@ router.put('/update-asset', autenticarToken, (req, res) => {
         res.status(404).send({ error: 'ASSET_NOT_FOUND' });
     }
 });
+
 
 
 

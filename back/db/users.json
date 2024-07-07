@@ -54,28 +54,20 @@
         "cotas": 30
       },
       {
-        "idAsset": "a10c1a0264b0f21d5da714075c99896c",
-        "data": "2024-07-08",
-        "sigla": "AME3",
-        "setor": "Varejo",
-        "preco": 2,
-        "cotas": 30
-      },
-      {
-        "idAsset": "a10c1a0264b0f21d5da714075c99896c",
-        "data": "2024-07-08",
-        "sigla": "AME3",
-        "setor": "Varejo",
-        "preco": 2,
-        "cotas": 30
-      },
-      {
         "idAsset": "108abaa7648c9fc0aee92d06fe29ff39",
-        "data": "2024-05-28",
+        "data": "02/02/2024",
         "sigla": "APPL3",
-        "setor": "Tecnologia",
-        "preco": 100,
-        "cotas": 500
+        "setor": "petrolifero também",
+        "preco": 123,
+        "cotas": 2323
+      },
+      {
+        "idAsset": "1a8066f5186d5d70f112de337ed14d28",
+        "data": "09/04/2003",
+        "sigla": "NVDA",
+        "setor": "mudei setor",
+        "preco": 456,
+        "cotas": 456
       }
     ]
   },

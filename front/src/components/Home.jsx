@@ -23,10 +23,6 @@ export default function Home() {
                     <h2>RESUMO DA SUA CONTA</h2>
                     
                     <ListAssets />
-                    
-                    <div className="total-invested">
-                        <p><strong>TOTAL INVESTIDO</strong>: R$ 0,00</p>
-                    </div>
                 </div>
             </div>
 
@@ -35,7 +31,7 @@ export default function Home() {
                     <p>Augusto Juiz Ribeiro - 2023004523</p>
                     <p>Erick De Alvarenga Bonifacio - 2023005736</p>
                     <p>Daniel Pires Domingueti - 2023005164</p>
-                    <p>Adriano Maretti - 2024kkk</p>
+                    <p>Adriano Maretti - 2024001938</p>
                 </div>
                 <div id='git'>
                     <a href="https://github.com/Erick-Bonifacio/Final-Web-Project">GitHub</a>

@@ -71,7 +71,24 @@
     "bairro": "Pinheirinho",
     "email": "a@gmail.com",
     "senha": "a123",
-    "assets": []
+    "assets": [
+      {
+        "idAsset": "dadffb61b25a579933db7f58816f3923",
+        "data": "2023-07-16",
+        "sigla": "PETR4",
+        "setor": "Petróleo",
+        "preco": 16,
+        "cotas": 100
+      },
+      {
+        "idAsset": "a02bb2b54325ecd9b35529016c837be5",
+        "data": "2024-02-11",
+        "sigla": "VVAR3",
+        "setor": "Varejo",
+        "preco": 10,
+        "cotas": 250
+      }
+    ]
   },
   {
     "idUser": "a8c8de713e02154b38fcee3108235b5f",

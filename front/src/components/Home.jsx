@@ -1,34 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import ListAssets from './ListAssets';
-import '../styles/home.css'
+import '../styles/home.css';
 
-export default function Home(){
-    return(
-        <>  
-            <body>
+export default function Home() {
+    return (
+        <>
+            <div id='nav-bar'>
+                <nav>
+                    <ul>
+                        <li><a href='/add-asset'>Adicionar asset</a></li>
+                        <li><a href='/update-asset'>Atualizar asset</a></li>
+                        <li><a href='/update-user'>Atualizar usuário</a></li>
+                        <li><a href='/delete-user'>Excluir conta</a></li>
+                    </ul>
+                </nav>
+            </div>
 
-                <div id='nav-bar'>
-                    <nav>
-                        <ul>
-                            <li><a href='/add-asset'>Adicionar asset</a></li>
-                            <li><a href='/update-asset'>Atualizar asset</a></li>
-                            <li><a href='/update-user'>Atualizar usuário</a></li>
-                            <li><a href='/delete-user'>Excluir conta</a></li>
-                        </ul>
-                    </nav>
+            <div id="content">
+                <div className="account-summary">
+                    <h1>RESUMO DA SUA CONTA</h1>
+                    
+                    <ListAssets />
+                    
+                    <div className="total-invested">
+                        <p><strong>TOTAL INVESTIDO</strong>: R$ 0,00</p>
+                    </div>
                 </div>
+            </div>
 
-                <div id="content">
-                    <ListAssets/>
-                </div>
-
-
-            </body>
             <footer id='footer'>
-
-                <div class="footer-info">
+                <div className="footer-info">
                     <p>Augusto Juiz Ribeiro - 2023004523</p>
                     <p>Erick De Alvarenga Bonifacio - 2023005736</p>
                     <p>Daniel Pires Domingueti - 2023005164</p>
@@ -39,5 +41,5 @@ export default function Home(){
                 </div>
             </footer>
         </>
-    )
+    );
 }

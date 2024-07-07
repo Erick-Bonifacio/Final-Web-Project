@@ -1,29 +1,79 @@
-body{
-    display: flex;
-    justify-content: left;
+body {
+    background-color: #121212;
+    color: white;
+    font-family: Arial, sans-serif;
 }
 
-#nav-bar{
-    margin-top: 0;
-    height: 50%;
-    width: 15%;
+#nav-bar {
+    background-color: #1e1e1e;
+    padding: 1rem;
 }
 
-#content{
-    height: 100%;
-    width: 85%;
-    background-color: white;
-}
-
-#footer{
-    display: flex;
-    width: 50%;
+#nav-bar nav ul {
+    list-style-type: none;
     padding: 0;
-    margin: 0 auto;
 }
 
-#git{
-    height: 50%;
-    margin: auto;
+#nav-bar nav ul li {
+    display: inline;
+    margin-right: 1rem;
 }
 
+#nav-bar nav ul li a {
+    color: #00aaff;
+    text-decoration: none;
+}
+
+#content {
+    padding: 2rem;
+}
+
+.account-summary {
+    background-color: #1e1e1e;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.account-summary h1 {
+    margin-bottom: 1rem;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 1rem;
+    background-color: #2a2a2a;
+    border: none;
+    color: #00aaff;
+    cursor: pointer;
+}
+
+.tab-button.active {
+    background-color: #00aaff;
+    color: white;
+}
+
+.account-details p, .total-invested p {
+    margin: 0.5rem 0;
+}
+
+.footer-info {
+    background-color: #1e1e1e;
+    padding: 1rem;
+    text-align: center;
+}
+
+#git {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+#git a {
+    color: #00aaff;
+    text-decoration: none;
+}

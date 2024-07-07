@@ -29,25 +29,25 @@ router.get('/get-user/:id', autenticarToken, (req, res) => {
     console.log(req);
 });
 
-router.get('/list-assets', autenticarToken, (req, res) => {
-    
-    const {idUser} = req.body;
-    let assets = []
+router.get('/list-assets/:idUser', autenticarToken, (req, res) => {
+    const { idUser } = req.params;
+    let assets = [];
 
-    // busca no banco 
-    for(user of users){
-        if (user.idUser == idUser){
-            assets.push(user.assets)
+    // Busca no banco 
+    for (let user of users) {
+        if (user.idUser == idUser) {
+            assets = user.assets;
+            break;
         }
     }
 
-    if(assets.length > 0){
-        res.status(200).json(assets[0]);
-    }
-    else {
-        res.status(404).send('USER_NOT_FOUND');
+    if (assets.length > 0) {
+        res.status(200).json(assets);
+    } else {
+        res.status(200).json(assets);
     }
 });
+
 
 
 router.get('/get-asset', autenticarToken, (req, res) => {

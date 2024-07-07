@@ -52,6 +52,30 @@
         "setor": "Varejo",
         "preco": 2,
         "cotas": 30
+      },
+      {
+        "idAsset": "a10c1a0264b0f21d5da714075c99896c",
+        "data": "2024-07-08",
+        "sigla": "AME3",
+        "setor": "Varejo",
+        "preco": 2,
+        "cotas": 30
+      },
+      {
+        "idAsset": "a10c1a0264b0f21d5da714075c99896c",
+        "data": "2024-07-08",
+        "sigla": "AME3",
+        "setor": "Varejo",
+        "preco": 2,
+        "cotas": 30
+      },
+      {
+        "idAsset": "108abaa7648c9fc0aee92d06fe29ff39",
+        "data": "2024-05-28",
+        "sigla": "APPL3",
+        "setor": "Tecnologia",
+        "preco": 100,
+        "cotas": 500
       }
     ]
   },
@@ -103,6 +127,15 @@
     "bairro": "Água Funda",
     "email": "gabrielcmaia@gmail.com",
     "senha": "555",
-    "assets": []
+    "assets": [
+      {
+        "idAsset": "51cc92e9d94ec8c8287fb8bead3b8de1",
+        "data": "2024-07-06",
+        "sigla": "AME3",
+        "setor": "Varejo",
+        "preco": 200,
+        "cotas": 300
+      }
+    ]
   }
 ]

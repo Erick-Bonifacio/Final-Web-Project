@@ -9,23 +9,26 @@ export default function ListAssets() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchAssets = async () => {
-            const idUser = localStorage.getItem('id');
-            const token = localStorage.getItem('token');
+  useEffect(() => {
+    const fetchAssets = async () => {
+      const idUser = localStorage.getItem("id");
+      const token = localStorage.getItem("token");
 
-            if (!idUser || !token) {
-                setError('Usuário não autenticado');
-                setLoading(false);
-                return;
-            }
+      if (!idUser || !token) {
+        setError("Usuário não autenticado");
+        setLoading(false);
+        return;
+      }
 
-            try {
-                const response = await axios.get(`http://localhost:8080/usersroute/list-assets/${idUser}`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/usersroute/list-assets/${idUser}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
                 if (response.status === 200) {
                     if (response.data.length > 0) {
@@ -44,8 +47,8 @@ export default function ListAssets() {
             }
         };
 
-        fetchAssets();
-    }, []);
+    fetchAssets();
+  }, []);
 
     const handleUpdate = (asset) => {
         navigate('/update-asset', { state: { asset } });
@@ -90,6 +93,7 @@ export default function ListAssets() {
     if (error) return <p>{error}</p>;
 
     return (
+      <>
         <div className="assets-list">
             {assets.length > 0 ? (
                 <ol className="assets-list">
@@ -111,5 +115,17 @@ export default function ListAssets() {
                 <p>Você não possui assets.</p>
             )}
         </div>
+
+        <div className="total-invested">
+          <p>
+            <strong>TOTAL INVESTIDO</strong>: R${" "}
+            {assets
+              .reduce((total, asset) => total + asset.cotas * asset.preco, 0)
+              .toFixed(2).replace('.', ',')}
+          </p>
+        </div>
+      </>
+
+        
     );
 }

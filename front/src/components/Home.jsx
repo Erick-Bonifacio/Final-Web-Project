@@ -20,7 +20,7 @@ export default function Home() {
 
             <div id="content">
                 <div className="account-summary">
-                    <h1>RESUMO DA SUA CONTA</h1>
+                    <h2>RESUMO DA SUA CONTA</h2>
                     
                     <ListAssets />
                     

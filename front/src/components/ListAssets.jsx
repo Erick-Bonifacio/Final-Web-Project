@@ -54,7 +54,7 @@ export default function ListAssets() {
         <div className="assets-list">
             {/* <h1>Seus Assets</h1> */}
             {assets.length > 0 ? (
-                <ul>
+                <ol>
                     {assets.map((asset, index) => (
                         <li key={index} className="asset-item">
                             <div><strong>Data:</strong> {asset.data}</div>
@@ -64,7 +64,7 @@ export default function ListAssets() {
                             <div><strong>Cotas:</strong> {asset.cotas}</div>
                         </li>
                     ))}
-                </ul>
+                </ol>
             ) : (
                 <p>Você não possui assets.</p>
             )}

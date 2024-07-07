@@ -30,10 +30,13 @@ export default function Login() {
         "http://localhost:8080/auth/login",
         data
       );
-      navigate("/home");
+      
 
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.accessToken);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("id", response.data.id);
+        console.log(response.data.acessToken);
+        navigate("/home");
       } else if (response.status === 401) {
         alert(response.data);
       } else {

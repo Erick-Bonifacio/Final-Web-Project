@@ -17,7 +17,14 @@ router.post("/login", (req, res) => {
   const user = users.find((u) => u.email === username && u.senha === password);
   if (user) {
     const accessToken = jwt.sign(user, process.env.TOKEN);
-    res.status(200).json({ accessToken });
+
+    let JSONRetorno = {
+      token: accessToken,
+      id: user.idUser
+
+    }
+
+    res.status(200).json(JSONRetorno);
   } else {
     res.status(401).send("Usuário ou senha inválidos");
   }

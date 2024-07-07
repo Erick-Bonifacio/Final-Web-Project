@@ -227,8 +227,6 @@ router.put('/update-user', autenticarToken, (req, res) => {
 function autenticarToken(req,res,next){
     const authH = req.headers['authorization'];
 
-    console.log(' token teste', authH)
-
     const token = authH && authH.split(' ')[1];
     if(token === null) return res.status(401).send('Token não encontrado');
     

@@ -33,24 +33,45 @@ export default function UpdateUser() {
         }
         return true;
     }
-
     const onSubmit = async (data) => {
-        let userExist = true; //autenticate(data);
-        if(userExist){
-            let boolConfirmation = confirm("Você deseja atualizar seus dados?");
-            if(boolConfirmation){
-                //pegar idUser do jwt? ou var global?
-                let idUser = "763c9773b8dab61698ab4b81536911b2";
-                const response = await axios.put('http://localhost:8080/usersroute/update-user', idUser);
-                if(response.status == 200){
-                    alert("Conta atualizada com sucesso!")
-                    navigate('/home');
-                } else{
-                    alert("Ocorreu um erro ao atualizar sua conta!");
-                }
-            }
-        }
-    };
+      let userExist = true; //autenticate(data);
+      if(userExist){
+          let boolConfirmation = confirm("Você deseja atualizar seus dados?");
+          if(boolConfirmation){
+              const token = localStorage.getItem('token');  // Obter o token do localStorage
+              const id = localStorage.getItem('id');  // Obter o token do localStorage
+
+              const updatedUserData = {
+                  idUser: id,
+                  nome: data.username,
+                  dataNascimento: birthdate,
+                  rua: street,
+                  bairro: quarter,
+                  email: data.email,
+                  senha: data.password
+              };
+  
+              try {
+                  const response = await axios.put('http://localhost:8080/usersroute/update-user', updatedUserData, {
+                      headers: {
+                          'Authorization': `Bearer ${token}`  // Adicionar o token no cabeçalho da requisição
+                      }
+                  });
+  
+                  if(response.status === 200){
+                      alert("Conta atualizada com sucesso!");
+                      navigate('/home');
+                  } else {
+                      alert("Ocorreu um erro ao atualizar sua conta!");
+                  }
+              } catch (error) {
+                  alert("Ocorreu um erro ao atualizar sua conta!");
+                  console.error('Erro na atualização:', error);
+              }
+          }
+      }
+  };
+  
 
     const fetchAddress = async (cep) => {
         try {

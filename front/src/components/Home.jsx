@@ -12,8 +12,9 @@ export default function Home(){
                 <div id='nav-bar'>
                     <nav>
                         <ul>
-                            <li><a href='/update-user'>Atualizar usuário</a></li>
+                            <li><a href='/add-asset'>Adicionar asset</a></li>
                             <li><a href='/update-asset'>Atualizar asset</a></li>
+                            <li><a href='/update-user'>Atualizar usuário</a></li>
                             <li><a href='/delete-user'>Excluir conta</a></li>
                         </ul>
                     </nav>

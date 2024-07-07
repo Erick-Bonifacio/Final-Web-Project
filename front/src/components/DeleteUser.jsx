@@ -32,14 +32,29 @@ export default function DeleteUser() {
         if(userExist){
             let boolConfirmation = confirm("Você deseja realmente excluir sua conta?");
             if(boolConfirmation){
-                //pegar idUser do jwt? ou var global?
-                let idUser = "763c9773b8dab61698ab4b81536911b2";
-                const response = await axios.delete('http://localhost:8080/usersroute/delete-user', idUser);
-                if(response.status == 200){
-                    alert("Conta deletada com sucesso!")
-                    navigate('/');
-                } else{
+                
+                const token = localStorage.getItem('token');  // Obter o token do localStorage
+                const idUser = localStorage.getItem('id');  // Obter o id do localStorage
+
+                try {
+                    const response = await axios.delete(`http://localhost:8080/usersroute/delete-user`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        },
+                        data: {
+                            idUser: idUser
+                        }
+                    });
+
+                    if(response.status === 200){
+                        alert("Conta deletada com sucesso!");
+                        navigate('/');
+                    } else {
+                        alert("Ocorreu um erro ao deletar sua conta!");
+                    }
+                } catch (error) {
                     alert("Ocorreu um erro ao deletar sua conta!");
+                    console.error('Erro ao deletar:', error);
                 }
             }
         }
@@ -51,41 +66,41 @@ export default function DeleteUser() {
 
     return (
         <div className="login-container">
-        <h2>Deletar Usuario</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="input-group">
-            <label htmlFor="username">Usuário</label>
-            <input
-                type="text"
-                id="username"
-                placeholder='exemplo@exemplo.com'
-                {...register('username')}
-            />
-            <p className='erro'>{errors.username?.message}</p>
-            </div>
-            <div className="input-group">
-            <label htmlFor="password">Senha</label>
-            <input
-                type="password"
-                id="password"
-                placeholder='senha'
-                {...register('password')}
-            />
-            <p className='erro'>{errors.password?.message}</p>
-            </div>
-            <div className="input-group">
-            <label htmlFor="passwordConf">Confirmação</label>
-            <input
-                type="password"
-                id="passwordConf"
-                placeholder='confirme a senha'
-                {...register('passwordConf')}
-            />
-            <p className='erro'>{errors.passwordConf?.message}</p>
-            </div>
-            <button type="submit">Deletar</button>
-        </form>
-        <a href="/home"  id='new-user' onClick={navigateListAssets}>Voltar</a>
+            <h2>Deletar Usuario</h2>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="input-group">
+                    <label htmlFor="username">Usuário</label>
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder='exemplo@exemplo.com'
+                        {...register('username')}
+                    />
+                    <p className='erro'>{errors.username?.message}</p>
+                </div>
+                <div className="input-group">
+                    <label htmlFor="password">Senha</label>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder='senha'
+                        {...register('password')}
+                    />
+                    <p className='erro'>{errors.password?.message}</p>
+                </div>
+                <div className="input-group">
+                    <label htmlFor="passwordConf">Confirmação</label>
+                    <input
+                        type="password"
+                        id="passwordConf"
+                        placeholder='confirme a senha'
+                        {...register('passwordConf')}
+                    />
+                    <p className='erro'>{errors.passwordConf?.message}</p>
+                </div>
+                <button type="submit">Deletar</button>
+            </form>
+            <a href="/home" id='new-user' onClick={navigateListAssets}>Voltar</a>
         </div>
     );
 };

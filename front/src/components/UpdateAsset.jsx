@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/LoginStyle.css';
+import '../styles/updateAsset.css';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup"; 
-import "../styles/updateAsset.css";
-
 
 const schema = yup.object({
   idAsset: yup.string().required('ID do Asset obrigatório'),
@@ -19,7 +17,7 @@ const schema = yup.object({
 
 export default function UpdateAsset() {
 
-    const [id, setId] = useState('');
+    const [idAsset, setIdAsset] = useState('');
     const [data, setData] = useState('');
     const [sigla, setSigla] = useState('');
     const [setor, setSetor] = useState('');
@@ -32,27 +30,50 @@ export default function UpdateAsset() {
         resolver: yupResolver(schema)
     });
 
-    async function autenticate(data){
-        const response = await axios.post('http://localhost:8080/auth/login', data);
-        if(response.status != 200){
-            return false;
-        }
-        return true;
-    }
-
     const onSubmit = async (data) => {
         let userExist = true; //autenticate(data);
         if(userExist){
             let boolConfirmation = confirm("Você deseja atualizar sua asset?");
             if(boolConfirmation){
-                // pegar idUser do jwt? ou var global?
-                let idUser = "763c9773b8dab61698ab4b81536911b2";
-                const response = await axios.put('http://localhost:8080/usersroute/update-asset', idUser);
-                if(response.status == 200){
-                    alert("Asset atualizada com sucesso!")
-                    navigate('/home');
-                } else {
+
+                const token = localStorage.getItem('token');  // Obter o token do localStorage
+                const idUser = localStorage.getItem('id');  // Obter o id do localStorage
+
+                if (!token || !idUser) {
+                    alert("Erro: token ou ID de usuário não encontrado.");
+                    return;
+                }
+
+                const updatedAssetData = {
+                    idAsset: data.idAsset,
+                    data: data.data,
+                    sigla: data.sigla,
+                    setor: data.setor,
+                    preco: data.preco,
+                    cotas: data.cotas,
+                    idUser: idUser  // Adicionar o id do usuário
+                };
+
+                console.log("Dados enviados:", updatedAssetData);
+
+                try {
+                    const response = await axios.put('http://localhost:8080/usersroute/update-asset', updatedAssetData, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`  // Adicionar o token no cabeçalho da requisição
+                        }
+                    });
+
+                    console.log("Resposta da API:", response);
+
+                    if(response.status === 200){
+                        alert("Asset atualizada com sucesso!");
+                        navigate('/home');
+                    } else {
+                        alert("Ocorreu um erro ao atualizar sua asset!");
+                    }
+                } catch (error) {
                     alert("Ocorreu um erro ao atualizar sua asset!");
+                    console.error('Erro na atualização:', error);
                 }
             }
         }
@@ -84,7 +105,7 @@ export default function UpdateAsset() {
                 placeholder='Data'
                 {...register('data')}
               />
-              <p className='erro'>{errors.data?.message}</p>
+              <p classna='erro'>{errors.data?.message}</p>
             </div>
             <div className="input-group">
               <label htmlFor="sigla">Sigla</label>

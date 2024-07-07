@@ -1,12 +1,12 @@
 [
   {
     "idUser": 129031,
-    "nome": "ERICK",
+    "nome": "AAAAAAA",
     "dataNascimento": "01/01/2000",
-    "rua": "Piranguinho Street",
-    "bairro": "Ferreira Quarter",
-    "email": "teste@teste.com",
-    "senha": "0000",
+    "rua": "bbbbbbbbbbb",
+    "bairro": "fffffffff",
+    "email": "adadada@f.com",
+    "senha": "123",
     "assets": [
       {
         "idAsset": 129031,
@@ -38,13 +38,22 @@
   },
   {
     "idUser": "763c9773b8dab61698ab4b81536911b2",
-    "nome": "",
-    "dataNascimento": "",
-    "rua": "",
-    "bairro": "",
-    "email": "",
-    "senha": "",
-    "assets": []
+    "nome": "Erick",
+    "dataNascimento": "2024-03-28",
+    "rua": "Rua Coronel Francisco Braz",
+    "bairro": "Pinheirinho",
+    "email": "erick@gmail.com",
+    "senha": "AAA",
+    "assets": [
+      {
+        "idAsset": "a10c1a0264b0f21d5da714075c99896c",
+        "data": "2024-07-08",
+        "sigla": "AME3",
+        "setor": "Varejo",
+        "preco": 2,
+        "cotas": 30
+      }
+    ]
   },
   {
     "idUser": "6a6fc81818d5625446e9d38ef7efa1b1",
@@ -58,12 +67,12 @@
   },
   {
     "idUser": "a8c8de713e02154b38fcee3108235b5f",
-    "nome": "Erick",
+    "nome": "TESTE ERICK BREJUDO",
     "dataNascimento": "2024-03-28",
     "rua": "Rua Moisés Luize",
     "bairro": "Cruzeiro",
     "email": "erick@gmail.com",
-    "senha": "erick1",
+    "senha": "TESTE1",
     "assets": []
   },
   {
@@ -74,6 +83,26 @@
     "bairro": "Jardim Las Palmas",
     "email": "jogadasplays@gmail.com",
     "senha": "larissa",
+    "assets": []
+  },
+  {
+    "idUser": "00bbf2278b559a11f1672866ad4bde59",
+    "nome": "aaaaaaaaaaaa",
+    "dataNascimento": "01/01/2000",
+    "rua": "bbbbbbbbbbb",
+    "bairro": "fffffffff",
+    "email": "fdfdf@dfdfdf.com",
+    "senha": "123",
+    "assets": []
+  },
+  {
+    "idUser": "f0825c35ab792013443355df992e1b9e",
+    "nome": "Gabriel Coelho Maia",
+    "dataNascimento": "2002-05-29",
+    "rua": "Rodovia dos Imigrantes",
+    "bairro": "Água Funda",
+    "email": "gabrielcmaia@gmail.com",
+    "senha": "555",
     "assets": []
   }
 ]

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/updateAsset.css';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -16,46 +16,45 @@ const schema = yup.object({
 
 export default function UpdateAsset() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { asset } = location.state || {};
+
     const { register, handleSubmit, formState: { errors } } = useForm({
+        defaultValues: asset,
         resolver: yupResolver(schema)
     });
 
     const onSubmit = async (formData) => {
-        let userExist = true; //autenticate(data);
-        if(userExist){
-            let boolConfirmation = confirm("Você deseja atualizar sua asset?");
-            if(boolConfirmation){
-                const token = localStorage.getItem('token');
-                const idUser = localStorage.getItem('id');
+        const idUser = localStorage.getItem('id');
+        const token = localStorage.getItem('token');
 
-                if (!token || !idUser) {
-                    alert("Erro: token ou ID de usuário não encontrado.");
-                    return;
+        if (!token || !idUser) {
+            alert("Erro: token ou ID de usuário não encontrado.");
+            return;
+        }
+
+        const updatedAssetData = {
+            ...formData,
+            idUser: idUser,
+            idAsset: asset.idAsset, // Use the asset ID from the state
+        };
+
+        try {
+            const response = await axios.put('http://localhost:8080/usersroute/update-asset', updatedAssetData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
+            });
 
-                const updatedAssetData = {
-                    ...formData,
-                    idUser: idUser,
-                };
-
-                try {
-                    const response = await axios.put('http://localhost:8080/usersroute/update-asset', updatedAssetData, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    });
-
-                    if(response.status === 200){
-                        alert("Asset atualizada com sucesso!");
-                        navigate('/home');
-                    } else {
-                        alert("Ocorreu um erro ao atualizar sua asset!");
-                    }
-                } catch (error) {
-                    alert("Ocorreu um erro ao atualizar sua asset!");
-                    console.error('Erro na atualização:', error);
-                }
+            if(response.status === 200){
+                alert("Asset atualizada com sucesso!");
+                navigate('/home');
+            } else {
+                alert("Ocorreu um erro ao atualizar sua asset!");
             }
+        } catch (error) {
+            alert("Ocorreu um erro ao atualizar sua asset!");
+            console.error('Erro na atualização:', error);
         }
     };
 

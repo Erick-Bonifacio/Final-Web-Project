@@ -105,17 +105,18 @@ router.post('/add-asset', autenticarToken, (req, res) => {
 
 
 router.put('/update-asset', autenticarToken, (req, res) => {
-    const { idUser, sigla, data, setor, preco, cotas } = req.body;
+    const { idUser, idAsset, data, sigla, setor, preco, cotas } = req.body;
 
     let userFound = false;
     let assetFound = false;
 
-    for(let user of users){
-        if(user.idUser === idUser){
+    for (let user of users) {
+        if (user.idUser === idUser) {
             userFound = true;
-            for(let asset of user.assets){
-                if(asset.sigla === sigla){
+            for (let asset of user.assets) {
+                if (asset.idAsset === idAsset) {
                     if (data) asset.data = data;
+                    if (sigla) asset.sigla = sigla;
                     if (setor) asset.setor = setor;
                     if (preco) asset.preco = preco;
                     if (cotas) asset.cotas = cotas;
@@ -127,7 +128,7 @@ router.put('/update-asset', autenticarToken, (req, res) => {
         }
     }
 
-    if(userFound && assetFound){
+    if (userFound && assetFound) {
         fs.writeFileSync(pathUsers, JSON.stringify(users, null, 2));
         res.status(200).send({ status: 'OK' });
     } else if (!userFound) {
@@ -136,6 +137,8 @@ router.put('/update-asset', autenticarToken, (req, res) => {
         res.status(404).send({ error: 'ASSET_NOT_FOUND' });
     }
 });
+
+module.exports = router;
 
 
 router.delete('/delete-asset', autenticarToken, (req, res) => {

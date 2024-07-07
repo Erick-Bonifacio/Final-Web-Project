@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../styles/listAssets.css';
+import { useNavigate } from 'react-router-dom';
+import '../styles/ListAssetsStyle.css';
 
 export default function ListAssets() {
     const [assets, setAssets] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchAssets = async () => {
@@ -24,8 +26,6 @@ export default function ListAssets() {
                         'Authorization': `Bearer ${token}`
                     }
                 });
-
-                console.log('Response from API:', response);
 
                 if (response.status === 200) {
                     if (response.data.length > 0) {
@@ -47,14 +47,52 @@ export default function ListAssets() {
         fetchAssets();
     }, []);
 
+    const handleUpdate = (asset) => {
+        navigate('/update-asset', { state: { asset } });
+    };
+
+    const handleDelete = async (asset) => {
+        if (!window.confirm('Você tem certeza que deseja deletar este asset?')) {
+            return;
+        }
+
+        const token = localStorage.getItem('token');
+        const idUser = localStorage.getItem('id');
+
+        if (!token || !idUser) {
+            setError('Usuário não autenticado');
+            return;
+        }
+
+        try {
+            const response = await axios.delete(`http://localhost:8080/usersroute/delete-asset`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                data: {
+                    idUser,
+                    sigla: asset.sigla
+                }
+            });
+
+            if (response.status === 200) {
+                setAssets(assets.filter(a => a.sigla !== asset.sigla));
+            } else {
+                setError('Erro ao deletar asset');
+            }
+        } catch (error) {
+            console.error('Erro ao deletar asset:', error);
+            setError(error.response ? error.response.data : 'Erro ao deletar asset');
+        }
+    };
+
     if (loading) return <p>Carregando...</p>;
     if (error) return <p>{error}</p>;
 
     return (
         <div className="assets-list">
-            {/* <h1>Seus Assets</h1> */}
             {assets.length > 0 ? (
-                <ol>
+                <ol className="assets-list">
                     {assets.map((asset, index) => (
                         <li key={index} className="asset-item">
                             <div><strong>Data:</strong> {asset.data}</div>
@@ -62,6 +100,10 @@ export default function ListAssets() {
                             <div><strong>Setor:</strong> {asset.setor}</div>
                             <div><strong>Preço:</strong> {asset.preco}</div>
                             <div><strong>Cotas:</strong> {asset.cotas}</div>
+                            <div className="asset-actions">
+                                <button onClick={() => handleUpdate(asset)}>Atualizar</button>
+                                <button className="delete-btn" onClick={() => handleDelete(asset)}>Deletar</button>
+                            </div>
                         </li>
                     ))}
                 </ol>

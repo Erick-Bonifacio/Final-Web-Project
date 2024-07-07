@@ -46,20 +46,28 @@
     "senha": "AAA",
     "assets": [
       {
-        "idAsset": "a10c1a0264b0f21d5da714075c99896c",
-        "data": "2024-07-08",
-        "sigla": "AME3",
-        "setor": "Varejo",
-        "preco": 2,
-        "cotas": 30
+        "idAsset": "b5535ace57a9af3b3e6f778bc5567aa2",
+        "data": "12/05/1212",
+        "sigla": "AAA",
+        "setor": "n sei",
+        "preco": 555,
+        "cotas": 545
       },
       {
-        "idAsset": "b5535ace57a9af3b3e6f778bc5567aa2",
-        "data": "2024-07-01",
-        "sigla": "VALE3",
-        "setor": "Extração Mineral",
-        "preco": 200,
-        "cotas": 250
+        "idAsset": "c754447212f9357e2cdb388c3c558439",
+        "data": "2024-06-27",
+        "sigla": "TESTE4",
+        "setor": "Ambiente de Teste",
+        "preco": 159,
+        "cotas": 258
+      },
+      {
+        "idAsset": "a6aee5de904195a1386e1f4e6780fa10",
+        "data": "02/02/2024",
+        "sigla": "APPL5",
+        "setor": "Varejo",
+        "preco": 456345,
+        "cotas": 345345
       }
     ]
   },
@@ -119,25 +127,6 @@
         "setor": "Varejo",
         "preco": 200,
         "cotas": 300
-      }
-    ]
-  },
-  {
-    "idUser": "118afdf2490f3984033989bf1c64457d",
-    "nome": "wey",
-    "dataNascimento": "1999-05-21",
-    "rua": "Rua Coronel Francisco Braz",
-    "bairro": "Pinheirinho",
-    "email": "wey@gmail.com",
-    "senha": "123479",
-    "assets": [
-      {
-        "idAsset": "9e0822fb3efe45a21f0651178ecd37c2",
-        "data": "2024-07-01",
-        "sigla": "EENEX3",
-        "setor": "Energia",
-        "preco": 17,
-        "cotas": 7
       }
     ]
   }
